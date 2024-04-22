@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="594.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.pau3.RootController">
+    <children>
+        <TableView fx:id="groupTable" layoutX="31.0" layoutY="159.0" prefHeight="276.0" prefWidth="335.0">
+            <columns>
+                <TableColumn fx:id="workgroupCol" prefWidth="208.79998779296875" text="Wokrgroup" />
+            <TableColumn fx:id="slotsCol" prefWidth="58.4000244140625" text="Slots" />
+                <TableColumn fx:id="staffCol" prefWidth="65.5999755859375" text="Staff" />
+            </columns>
+        </TableView>
+        <Label layoutX="140.0" layoutY="66.0" prefHeight="35.0" prefWidth="115.0" text="Groups" textAlignment="CENTER">
+            <font>
+                <Font size="36.0" />
+            </font>
+        </Label>
+        <Button layoutX="72.0" layoutY="458.0" mnemonicParsing="false" onAction="#addGroupEvent" text="Add" />
+        <Button fx:id="groupModify" layoutX="145.0" layoutY="458.0" mnemonicParsing="false" onAction="#editGroupEvent" text="Unlock" />
+        <Button layoutX="231.0" layoutY="458.0" mnemonicParsing="false" onAction="#deleteGroupEvent" text="Delete" />
+        <StackPane layoutX="435.0" layoutY="159.0" prefHeight="276.0" prefWidth="454.0" style="-fx-background-color: white; -fx-border-color: lightgray; -fx-border-width: 1;">
+            <children>
+                <Label fx:id="employeeLabel" alignment="TOP_CENTER" prefHeight="217.0" prefWidth="290.0" text="Select a group to display its employees">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+            </children>
+        </StackPane>
+        <TableView fx:id="employeeTable" layoutX="435.0" layoutY="159.0" prefHeight="276.0" prefWidth="454.0" visible="false">
+            <columns>
+                <TableColumn fx:id="nameCol" prefWidth="98.4000244140625" text="Name" />
+                <TableColumn fx:id="surnameCol" minWidth="0.0" prefWidth="114.39996337890625" text="Surname" />
+                <TableColumn fx:id="conditionCol" prefWidth="98.4000244140625" text="Condition" />
+                <TableColumn fx:id="yearCol" prefWidth="69.60003662109375" text="Birth Year" />
+                <TableColumn fx:id="salaryCol" prefWidth="72.7999267578125" text="Salary" />
+            </columns>
+        </TableView>
+        <Label layoutX="575.0" layoutY="65.0" prefHeight="54.0" prefWidth="172.0" text="Employees" textAlignment="CENTER">
+            <font>
+                <Font size="36.0" />
+            </font>
+        </Label>
+        <Button layoutX="538.0" layoutY="458.0" mnemonicParsing="false" onAction="#addEmployeeEvent" text="Add" />
+        <Button fx:id="employeeModify" layoutX="611.0" layoutY="458.0" mnemonicParsing="false" onAction="#editEmployeeEvent" text="Unlock" />
+        <Button layoutX="697.0" layoutY="458.0" mnemonicParsing="false" onAction="#deleteEmployeeEvent" text="Delete" />
+        <Label layoutX="436.0" layoutY="120.0" prefHeight="27.0" prefWidth="54.0" text="Filter:">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <TextField fx:id="filterField" layoutX="490.0" layoutY="121.0" />
+    </children>
+</AnchorPane>
