@@ -1,0 +1,75 @@
+package org.example.pau3.external;
+
+import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table (name = "rate")
+public class Rate
+{
+    // Constants
+    private static final int LOWER_BOUND = 0;
+    private static final int UPPER_BOUND = 6;
+
+    // Attributes
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Column (name = "id")
+    private int id;
+
+    @Column (name = "rating", nullable = false)
+    private int rating;
+
+    @Column (name = "comment", nullable = false)
+    private String comment;
+
+    @ManyToOne
+    @JoinColumn (name = "group_id", nullable = false)
+    private ClassEmployee group;
+
+    @Column (name = "date", nullable = false)
+    private LocalDateTime dateTime;
+
+    // Constructor
+    Rate(int rating, ClassEmployee group, String comment)
+    {
+        validateRating(rating);
+
+        this.rating = rating;
+        this.group = group;
+        this.comment = comment;
+
+        dateTime = LocalDateTime.now();
+    }
+
+    protected Rate() {}
+
+    // Methods
+    private void validateRating(int rating)
+    {
+        if (rating < LOWER_BOUND || rating > UPPER_BOUND)
+            throw new IllegalArgumentException("Rating must be between " + LOWER_BOUND + " and " + UPPER_BOUND);
+    }
+
+    // Getters
+    public int getId() { return id; }
+    public int getRating() { return rating; }
+    public String getComment() { return comment; }
+    public ClassEmployee getGroup() { return group; }
+    public LocalDateTime getDate() { return dateTime; }
+
+    // Setters
+    public void setId(int id) { this.id = id; }
+
+    public void setRating(int rating)
+    {
+        validateRating(rating);
+
+        this.rating = rating;
+        this.dateTime = LocalDateTime.now();
+    }
+
+    public void setComment(String comment) { this. comment = comment; }
+    protected void setGroup(ClassEmployee group) { this.group = group; }
+}

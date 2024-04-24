@@ -15,4 +15,5 @@ module org.example.pau3 {
 
     // Exports your main application package
     exports org.example.pau3;
+    exports org.example.pau3.external;
 }

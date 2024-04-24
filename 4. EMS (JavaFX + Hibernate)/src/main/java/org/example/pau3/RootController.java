@@ -13,11 +13,8 @@ import javafx.util.converter.DoubleStringConverter;
 import org.example.pau3.external.ClassEmployee;
 import org.example.pau3.external.Employee;
 import org.example.pau3.external.EmployeeCondition;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 
@@ -177,7 +174,7 @@ public class RootController
 
     public void initializeData()
     {
-        List<ClassEmployee> CE = HibernateUtil.loadEmployees();
+        List<ClassEmployee> CE = DatabaseController.loadDB();
         groups_arr.addAll(CE);
     }
 
@@ -553,57 +550,19 @@ public class RootController
     void updateData(int index)
     {
         ClassEmployee classEmployee = groupTableList.get(index);
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = null;
-        try
-        {
-            transaction = session.beginTransaction();
-            session.update(classEmployee);
-            transaction.commit();
-        }
-        catch (RuntimeException ignore) { if (transaction != null) transaction.rollback(); }
-        finally  { session.close(); }
+        DatabaseController.updateDB(classEmployee);
         groups_arr.set(index, classEmployee);
     }
 
-
     void removeData(ClassEmployee data)
     {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = null;
-        System.out.println("Removing data with ID: " + data.getId());
-
-        try
-        {
-            transaction = session.beginTransaction();
-            session.remove(data);
-            transaction.commit();
-        }
-        catch (RuntimeException ignore)
-        {
-            if (transaction != null) transaction.rollback();
-        }
-        finally { session.close(); }
+        DatabaseController.removeDB(data);
         groups_arr.remove(data);
     }
 
-
     void addData(ClassEmployee data)
     {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = null;
-        try
-        {
-            transaction = session.beginTransaction();
-            session.persist(data);
-            transaction.commit();
-        }
-        catch (RuntimeException ignore)
-        {
-            if (transaction != null) transaction.rollback();
-        }
-        finally { session.close(); }
-
+        DatabaseController.addData(data);
         groups_arr.add(data);
     }
 }
