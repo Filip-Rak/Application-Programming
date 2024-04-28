@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 public class Rate
 {
     // Constants
-    private static final int LOWER_BOUND = 0;
-    private static final int UPPER_BOUND = 6;
+    public static final int LOWER_BOUND = 0;
+    public static final int UPPER_BOUND = 6;
 
     // Attributes
     @Id
@@ -25,19 +25,19 @@ public class Rate
     private String comment;
 
     @ManyToOne
-    @JoinColumn (name = "group_id", nullable = false)
-    private ClassEmployee group;
+    @JoinColumn (name = "group_id")
+    private ClassEmployee classEmployee;
 
     @Column (name = "date", nullable = false)
     private LocalDateTime dateTime;
 
     // Constructor
-    Rate(int rating, ClassEmployee group, String comment)
+    public Rate(int rating, ClassEmployee group, String comment)
     {
         validateRating(rating);
 
         this.rating = rating;
-        this.group = group;
+        this.classEmployee = group;
         this.comment = comment;
 
         dateTime = LocalDateTime.now();
@@ -56,8 +56,8 @@ public class Rate
     public int getId() { return id; }
     public int getRating() { return rating; }
     public String getComment() { return comment; }
-    public ClassEmployee getGroup() { return group; }
     public LocalDateTime getDate() { return dateTime; }
+    public ClassEmployee getClassEmployee() { return this.classEmployee; }
 
     // Setters
     public void setId(int id) { this.id = id; }
@@ -71,5 +71,5 @@ public class Rate
     }
 
     public void setComment(String comment) { this. comment = comment; }
-    protected void setGroup(ClassEmployee group) { this.group = group; }
+    protected void setGroup(ClassEmployee group) { this.classEmployee = group; }
 }

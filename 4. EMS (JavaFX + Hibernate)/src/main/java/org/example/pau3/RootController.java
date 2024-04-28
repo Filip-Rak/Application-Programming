@@ -1,6 +1,8 @@
 package org.example.pau3;
 
 import javafx.application.Platform;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,11 +11,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.Pane;
 import javafx.util.converter.DoubleStringConverter;
 import org.example.pau3.external.ClassEmployee;
 import org.example.pau3.external.Employee;
 import org.example.pau3.external.EmployeeCondition;
+import org.example.pau3.external.Rate;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +50,8 @@ public class RootController
     @FXML private TableColumn<ClassEmployee, String> workgroupCol;
     @FXML private TableColumn<ClassEmployee, String> staffCol;
     @FXML private TableColumn<ClassEmployee, Integer> slotsCol;
+    @FXML private TableColumn<ClassEmployee, String> reviewCol;
+    @FXML private TableColumn<ClassEmployee, String> scoreCol;
     ObservableList<ClassEmployee> groupTableList;
 
     //employee table
@@ -54,6 +61,12 @@ public class RootController
     @FXML private TableColumn<Employee, EmployeeCondition> conditionCol;
     @FXML private TableColumn<Employee, Integer> yearCol;
     @FXML private TableColumn<Employee, Double> salaryCol;
+
+    // Review pane
+    @FXML private Pane reviewPane;
+    @FXML private TextArea commentArea;
+    @FXML private ChoiceBox<Integer> scoreBox;
+    private int default_rating;
 
     //active selections
     ClassEmployee groupSelection;
@@ -68,6 +81,7 @@ public class RootController
         initializeEmployeeTable();
         initializeListeners();
         initializeVariables();
+        initializeReviewPane();
     }
 
     void initializeVariables()
@@ -136,6 +150,24 @@ public class RootController
             return new SimpleStringProperty(utilizationText);
         });
 
+        // Mapowanie kolumny z ilością recenzji
+        reviewCol.setCellValueFactory(cellData -> {
+            ClassEmployee classEmployee = cellData.getValue();
+            String reviewCountText = String.format("%d", classEmployee.getReviewCount());
+            return new SimpleStringProperty(reviewCountText);
+        });
+
+        // Mapowanie kolumny ze średnią ocen
+        scoreCol.setCellValueFactory(cellData -> {
+            ClassEmployee classEmployee = cellData.getValue();
+            String averageScoreText = String.format("%.2f", classEmployee.getAverageScore());
+            return new SimpleStringProperty(averageScoreText);
+        });
+
+        // Ustawienie sposobu wyświetlania danych w komórkach
+        reviewCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        scoreCol.setCellFactory(TextFieldTableCell.forTableColumn());
+
         //wstawienie do tabeli danych
         groupTableList = FXCollections.observableArrayList(groups_arr);
         groupTable.setItems(groupTableList);
@@ -172,6 +204,20 @@ public class RootController
         });
     }
 
+    private void initializeReviewPane()
+    {
+        // Make pane initially invisible
+        reviewPane.setVisible(false);
+
+        // Add rating values to choice box
+        for(int i = Rate.LOWER_BOUND; i <= Rate.UPPER_BOUND; i++)
+            scoreBox.getItems().add(i);
+
+        // Set a default value of choice box as max score
+        scoreBox.setValue(Rate.UPPER_BOUND);
+        default_rating = Rate.UPPER_BOUND;
+    }
+
     public void initializeData()
     {
         List<ClassEmployee> CE = DatabaseController.loadDB();
@@ -181,7 +227,6 @@ public class RootController
     //Listeners for group table
     private void onGroupChange(ClassEmployee newSelection)
     {
-        System.out.println("Selected workgroup: " + newSelection.getWorkgroup());
         updateEmployeeTable(newSelection.getEmployeeList());
         groupSelection = newSelection;
 
@@ -189,8 +234,27 @@ public class RootController
         if(employeeTable.isEditable())
             editEmployeeEvent();
 
-        //cleat the filter textField
+        //clear the filter textField
         filterField.setText("");
+
+        // Make the review pane visible
+        reviewPane.setVisible(true);
+
+        // Debug printing
+        System.out.println(
+                "--------------------------------------------------"
+                + "\nSelected workgroup: " + newSelection.getWorkgroup()
+                + "\nReviews: "
+        );
+
+        for(Rate rate : groupSelection.getRatingList())
+        {
+            System.out.println(
+                    "Score: " + rate.getRating()
+                    + "\tDate: " + rate.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy  HH:mm:ss"))
+                    + "\tComment: " + rate.getComment()
+            );
+        }
     }
 
     private void updateGroupName(TableColumn.CellEditEvent<ClassEmployee, String> event)
@@ -458,6 +522,24 @@ public class RootController
         }
         else
             System.out.println("ILLEGAL: attempted deletion of a not empty group");
+    }
+
+    @FXML private void submitReviewEvent()
+    {
+        // Create a new rating
+        int score = scoreBox.getValue();
+        String comment = commentArea.getText();
+
+        Rate rate = new Rate(score, groupSelection, comment);
+
+        // Add new rating to group and update database
+        groupSelection.getRatingList().add(rate);
+        updateData(groups_arr.indexOf(groupSelection));
+        groupTable.refresh();
+
+        // Go back to defaults
+        commentArea.setText("");
+        scoreBox.setValue(default_rating);
     }
 
     //Employee table events

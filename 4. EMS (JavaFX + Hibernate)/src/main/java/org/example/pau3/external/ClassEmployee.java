@@ -23,17 +23,22 @@ public class ClassEmployee
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "classEmployee", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<Employee> employeeList;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "classEmployee", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<Rate> ratingList;
+
     //Constructor
     public ClassEmployee(String workgroup, int maxEmployees)
     {
         this.workgroup = workgroup;
         this.maxEmployees = maxEmployees;
         this.employeeList = new ArrayList<>();
+        this.ratingList = new ArrayList<>();
     }
 
     public ClassEmployee()
     {
         employeeList = new LinkedList<>();
+        ratingList = new LinkedList<>();
     }
 
     //Methods
@@ -96,6 +101,7 @@ public class ClassEmployee
 
     //getters
     public List<Employee> getEmployeeList() { return this.employeeList; }
+    public List<Rate> getRatingList() { return this.ratingList; }
     public int getMaxEmployees() { return this.maxEmployees; }
     public int getId() { return this.id; }
     public String getWorkgroup() { return this.workgroup; }
@@ -103,4 +109,18 @@ public class ClassEmployee
     //setters
     public void setWorkgroup(String w) { this.workgroup = w; }
     public void setMax(int m) { this.maxEmployees = m; }
+
+    public int getReviewCount() { return ratingList.size(); }
+
+    public double getAverageScore()
+    {
+        double avg = 0;
+        for(Rate r : ratingList)
+            avg += r.getRating();
+
+        if(avg == 0)
+            return 0;
+        else
+            return avg / ratingList.size();
+    }
 }
