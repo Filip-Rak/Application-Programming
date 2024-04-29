@@ -14,9 +14,6 @@ public class ClassEmployee
     @Column(name = "id")
     private int id;
 
-    @Column(name = "workgroup")
-    private String workgroup;
-
     @Column(name = "maxEmployees")
     private int maxEmployees;
 
@@ -25,6 +22,9 @@ public class ClassEmployee
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "classEmployee", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<Rate> ratingList;
+
+    @Column(name = "workgroup")
+    private String workgroup;
 
     //Constructor
     public ClassEmployee(String workgroup, int maxEmployees)

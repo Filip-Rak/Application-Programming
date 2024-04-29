@@ -1,0 +1,11 @@
+id, name, surname, employeeCondition, birth_year, salary, classEmployee
+19, Eliza, Parowiec, DELEGACJA, 1998, 3000.0, 31
+20, Magdalena, Bugaj, CHORY, 2002, 1890.0, 31
+21, Andrzej, Niemic, DELEGACJA, 2001, 3090.0, 31
+22, Antoni, Wilno, NIEOBECNY, 2019, 147.0, 32
+23, Wojciech, Mozart, OBECNY, 1897, 30459.0, 32
+24, Justyna, Dziura, DELEGACJA, 2002, 2060.0, 33
+25, Kazimierz, Wielki, NIEOBECNY, 2004, 5060.0, 33
+26, Rafał, Zabłotni, OBECNY, 1920, 10450.0, 34
+27, Martyna, Makrela, DELEGACJA, 1998, 37.0, 37
+29, Andrzej, Kolano, NIEOBECNY, 2001, 1980.0, 37

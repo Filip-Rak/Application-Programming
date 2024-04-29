@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 28, 2024 at 11:29 PM
+-- Generation Time: Apr 29, 2024 at 04:19 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -104,7 +104,8 @@ INSERT INTO `rate` (`id`, `rating`, `comment`, `group_id`, `date`) VALUES
 (6, 0, '', 34, '2024-04-28 23:12:55'),
 (7, 6, 'last review was mistake. how do I delete review???:(((', 34, '2024-04-28 23:13:13'),
 (8, 2, 'not goofy enough', 33, '2024-04-28 23:21:28'),
-(9, 0, 'stole my cat', 31, '2024-04-28 23:27:29');
+(9, 0, 'stole my cat', 31, '2024-04-28 23:27:29'),
+(10, 1, 'bad neighbour', 32, '2024-04-29 10:42:55');
 
 --
 -- Indexes for dumped tables
@@ -150,7 +151,7 @@ ALTER TABLE `employee`
 -- AUTO_INCREMENT for table `rate`
 --
 ALTER TABLE `rate`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables

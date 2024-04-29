@@ -1,6 +1,7 @@
 package org.example.pau3.external;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 
 @Entity
 @Table (name = "employee")
@@ -75,6 +76,7 @@ public class Employee implements Comparable<Employee>
     public double getSalary() { return salary; }
     public int getBirth_year() { return birth_year; }
     public ClassEmployee getClassEmployee() { return this.classEmployee; }
+    public int getId() { return this.id; }
 
     //Setter
     public void setName(String name) { this.name = name; }

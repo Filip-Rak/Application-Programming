@@ -1,8 +1,6 @@
 package org.example.pau3;
 
 import javafx.application.Platform;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -540,6 +538,9 @@ public class RootController
         // Go back to defaults
         commentArea.setText("");
         scoreBox.setValue(default_rating);
+
+        // Force refresh of console
+        onGroupChange(groupSelection);
     }
 
     //Employee table events

@@ -51,7 +51,7 @@
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>6.5.0.CR2</version>
+            <version>6.4.2.Final</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
