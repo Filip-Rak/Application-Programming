@@ -1,11 +1,18 @@
 package pau.pau5.employee;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @RestController
 @RequestMapping(path = "api/employee")
@@ -22,17 +29,41 @@ public class EmployeeController
     }
 
     // Methods
-    @GetMapping(path = "getAll")
-    public List<Employee> getEmployees()
+    @GetMapping(path = "csv")
+    public ResponseEntity<?> downloadEmployeeCSV()
     {
-        return employeeService.getEmployees();
+        try
+        {
+            String filename = "employees.csv";
+            Path path = Paths.get(filename);
+            employeeService.writeEmployeesToCSV(employeeService.getAllEmployees(), filename);
+
+            Resource resource = new UrlResource(path.toUri());
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType("text/csv"))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                    .body(resource);
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error downloading the file: " + e.getMessage());
+        }
     }
 
     @PostMapping
-    public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee)
+    public ResponseEntity<?> addEmployee(@RequestBody EmployeeDTO employeeDTO)
     {
-        Employee savedEmployee = employeeService.addEmployee(employee);
-        return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
+        try
+        {
+            Employee employee = employeeService.addEmployee(employeeDTO);
+            return new ResponseEntity<>(employee, HttpStatus.CREATED);
+        }
+        catch (IllegalArgumentException e)
+        {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @DeleteMapping(path = ":{id}")

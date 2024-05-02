@@ -25,10 +25,10 @@ public class RateService
     {
         try
         {
-            ClassEmployee classEmployee = classEmployeeRepository.findById(rateDTO.getClassEmployeeId())
+            ClassEmployee classEmployee = classEmployeeRepository.findById(rateDTO.classEmployeeId())
                     .orElseThrow(() -> new IllegalArgumentException("Group not found"));
 
-            Rate rate = new Rate(rateDTO.getRating(), classEmployee, rateDTO.getComment());
+            Rate rate = new Rate(rateDTO.rating(), classEmployee, rateDTO.comment());
             return rateRepository.save(rate);
         }
         catch (IllegalArgumentException e)

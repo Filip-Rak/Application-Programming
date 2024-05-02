@@ -35,27 +35,25 @@ public class Employee implements Comparable<Employee>
     @JsonBackReference
     private ClassEmployee classEmployee;
 
-    @Transient
-    private int classEmployeeId;  // For JSON
-
     //Constructor
-    public Employee(String name, String surname, EmployeeCondition ec, int birth_year, double salary)
+    public Employee(String name, String surname, EmployeeCondition ec, int birth_year, double salary, ClassEmployee classEmployee)
     {
         this.name = name;
         this.surname = surname;
         this.employeeCondition = ec;
         this.birth_year = birth_year;
         this.salary = salary;
+        this.classEmployee = classEmployee;
     }
 
-    public Employee(String name, String surname, EmployeeCondition ec, int birth_year, double salary, int classEmployeeId)
+    public Employee(EmployeeDTO employeeDTO, ClassEmployee classEmployee)
     {
-        this.name = name;
-        this.surname = surname;
-        this.employeeCondition = ec;
-        this.birth_year = birth_year;
-        this.salary = salary;
-        this.classEmployeeId = classEmployeeId;
+        this.name = employeeDTO.name();
+        this.surname = employeeDTO.surname();
+        this.employeeCondition = employeeDTO.employeeCondition();
+        this.birth_year = employeeDTO.birthYear();
+        this.salary = employeeDTO.salary();
+        this.classEmployee = classEmployee;
     }
 
     public Employee()
@@ -89,7 +87,7 @@ public class Employee implements Comparable<Employee>
     public String getSurname() { return surname; }
     public EmployeeCondition getEmployeeCondition() { return employeeCondition; }
     public double getSalary() { return salary; }
-    public int getBirth_year() { return birth_year; }
+    public int getBirthYear() { return birth_year; }
     public ClassEmployee getClassEmployee() { return this.classEmployee; }
     public int getId() { return this.id; }
 

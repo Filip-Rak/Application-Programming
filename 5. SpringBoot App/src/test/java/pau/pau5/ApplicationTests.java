@@ -20,16 +20,16 @@ public class ApplicationTests
     private MockMvc mockMvc;
 
     @Test
-    public void testAddEmployee() throws Exception
+    public void testAddEmployeeSuccess() throws Exception
     {
         String employeeJson =
                 "{\n" +
                 "  \"name\": \"John\",\n" +
                 "  \"surname\": \"Doe\",\n" +
                 "  \"employeeCondition\": \"OBECNY\",\n" +
-                "  \"birth_year\": 1985,\n" +
-                "  \"salary\": 15.0\n" +
-                //"  \"classEmployeeId\": 31\n" +
+                "  \"birthYear\": 1985,\n" +
+                "  \"salary\": 15.0,\n" +
+                "  \"classEmployeeId\": 31\n" +
                 "}" +
                 "\n";
 
@@ -37,6 +37,26 @@ public class ApplicationTests
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(employeeJson))
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    public void testAddEmployeeFail() throws Exception
+    {
+        String employeeJson =
+                "{\n" +
+                        "  \"name\": \"John\",\n" +
+                        "  \"surname\": \"Doe\",\n" +
+                        "  \"employeeCondition\": \"OBECNY\",\n" +
+                        "  \"birthYear\": 1985,\n" +
+                        "  \"salary\": 15.0,\n" +
+                        "  \"classEmployeeId\": 1\n" +
+                        "}" +
+                        "\n";
+
+        mockMvc.perform(post("/api/employee")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(employeeJson))
+                .andExpect(status().isBadRequest());
     }
 
     @Test

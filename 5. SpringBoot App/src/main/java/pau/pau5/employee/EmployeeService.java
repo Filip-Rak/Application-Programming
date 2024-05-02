@@ -1,9 +1,14 @@
 package pau.pau5.employee;
 
+import com.opencsv.CSVWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pau.pau5.classEmployee.ClassEmployee;
+import pau.pau5.classEmployee.ClassEmployeeRepository;
 
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Service
@@ -11,33 +16,64 @@ public class EmployeeService
 {
     // Attributes
     private final EmployeeRepository employeeRepository;
-
+    private final ClassEmployeeRepository classEmployeeRepository;
 
     // Constructor
     @Autowired
-    public EmployeeService(EmployeeRepository employeeRepository)
+    public EmployeeService(EmployeeRepository employeeRepository, ClassEmployeeRepository classEmployeeRepository)
     {
         this.employeeRepository = employeeRepository;
+        this.classEmployeeRepository = classEmployeeRepository;
     }
 
     // Methods
-    public List<Employee> getEmployees()
+    public void writeEmployeesToCSV(List<Employee> employees, String csvFilePath) throws Exception
     {
-        return employeeRepository.findAll();
+        try (Writer writer = Files.newBufferedWriter(Paths.get(csvFilePath));
+             CSVWriter csvWriter = new CSVWriter(writer))
+        {
+
+            // Writing header record
+            csvWriter.writeNext(new String[]{"ID", "Name", "Surname", "Condition", "Birth Year", "Salary", "Group"});
+
+            // Writing data records
+            for (Employee emp : employees)
+            {
+                csvWriter.writeNext(new String[]{
+                        String.valueOf(emp.getId()),
+                        emp.getName(),
+                        emp.getSurname(),
+                        emp.getEmployeeCondition().toString(),
+                        String.valueOf(emp.getBirthYear()),
+                        String.format("%.2f", emp.getSalary()),
+                        String.valueOf(emp.getClassEmployee().getId())
+                });
+            }
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.getMessage());
+        }
     }
 
-    public Employee addEmployee(Employee employee)
+    public Employee addEmployee(EmployeeDTO employeeDTO)
     {
-        if(employee.getClassEmployee() == null)
-        {
-            //ClassEmployee classEmployee = //find class employee
-            //employee.setClassEmployee();
-        }
-        return employeeRepository.save(employee);
+        ClassEmployee classEmployee = classEmployeeRepository.findById(employeeDTO.classEmployeeId())
+                .orElseThrow(() -> new IllegalArgumentException("ClassEmployee with id " + employeeDTO.classEmployeeId() + " not found."));
+
+        Employee newEmployee = new Employee(employeeDTO, classEmployee);
+
+        employeeRepository.save(newEmployee);
+        return newEmployee;
     }
 
     public void deleteEmployee(int id)
     {
         employeeRepository.deleteById(id);
+    }
+
+    public List<Employee> getAllEmployees()
+    {
+        return employeeRepository.findAll();
     }
 }
