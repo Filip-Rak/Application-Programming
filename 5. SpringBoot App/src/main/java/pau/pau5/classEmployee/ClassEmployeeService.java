@@ -1,14 +1,11 @@
 package pau.pau5.classEmployee;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import pau.pau5.employee.Employee;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ClassEmployeeService
@@ -26,33 +23,44 @@ public class ClassEmployeeService
     // Methods
     public List<ClassEmployee> getGroups()
     {
-        return classEmployeeRepository.findAll();
+        List<ClassEmployee> list = classEmployeeRepository.findAll();
+
+        if (list.isEmpty())
+            throw new EntityNotFoundException("There are no groups");
+
+        return list;
     }
 
-    public ClassEmployee addGroup(ClassEmployee classEmployee)
+    public ClassEmployee addGroup(ClassEmployeeDTO classEmployeeDTO)
     {
-        return classEmployeeRepository.save(classEmployee);
+        ClassEmployee newGroup = new ClassEmployee(classEmployeeDTO);
+        return classEmployeeRepository.save(newGroup);
     }
 
     public void deleteGroup(int id)
     {
+        ClassEmployee classEmployee = classEmployeeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Group with id " + id + " not found."));
+
         classEmployeeRepository.deleteById(id);
     }
 
     public List<Employee> getEmployees(int id)
     {
-        Optional<ClassEmployee> classEmployee = classEmployeeRepository.findById(id);
-        return classEmployee.map(ClassEmployee::getEmployeeList).orElse(Collections.emptyList());
+        ClassEmployee classEmployee = classEmployeeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Group with id " + id + " not found."));
+
+
+        return classEmployee.getEmployeeList();
     }
 
     public double getUtilization(int id)
     {
-        Optional<ClassEmployee> classEmployee =  classEmployeeRepository.findById(id);
+        ClassEmployee classEmployee =  classEmployeeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Group with id " + id + " not found."));
 
-        if(classEmployee.isEmpty()) return 0;
-
-        double max = classEmployee.get().getMaxEmployees();
-        double size = classEmployee.get().getEmployeeList().size();
+        double max = classEmployee.getMaxEmployees();
+        double size = classEmployee.getEmployeeList().size();
 
         return size / max;
     }

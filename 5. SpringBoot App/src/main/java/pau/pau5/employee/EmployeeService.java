@@ -1,8 +1,11 @@
 package pau.pau5.employee;
 
 import com.opencsv.CSVWriter;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import pau.pau5.classEmployee.ClassEmployee;
 import pau.pau5.classEmployee.ClassEmployeeRepository;
 
@@ -67,9 +70,17 @@ public class EmployeeService
         return newEmployee;
     }
 
+    //@Transactional
     public void deleteEmployee(int id)
     {
-        employeeRepository.deleteById(id);
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Employee with id " + id + " not found."));
+
+        // Detaching employee from parent ClassEmployee
+        ClassEmployee parent = employee.getClassEmployee();
+        parent.getEmployeeList().remove(employee);
+
+        employeeRepository.delete(employee);
     }
 
     public List<Employee> getAllEmployees()

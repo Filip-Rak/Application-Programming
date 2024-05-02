@@ -1,5 +1,6 @@
 package pau.pau5.employee;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -53,17 +54,10 @@ public class EmployeeController
     }
 
     @PostMapping
-    public ResponseEntity<?> addEmployee(@RequestBody EmployeeDTO employeeDTO)
+    public ResponseEntity<?> addEmployee(@Valid @RequestBody EmployeeDTO employeeDTO)
     {
-        try
-        {
-            Employee employee = employeeService.addEmployee(employeeDTO);
-            return new ResponseEntity<>(employee, HttpStatus.CREATED);
-        }
-        catch (IllegalArgumentException e)
-        {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        Employee employee = employeeService.addEmployee(employeeDTO);
+        return new ResponseEntity<>(employee, HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = ":{id}")

@@ -1,5 +1,6 @@
 package pau.pau5.rate;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,16 +22,9 @@ public class RateController
 
     // Methods
     @PostMapping
-    public ResponseEntity<?> addRate(@RequestBody RateDTO rateDTO)
+    public ResponseEntity<?> addRate(@Valid @RequestBody RateDTO rateDTO)
     {
-        try
-        {
-            Rate rate = rateService.addRate(rateDTO);
-            return new ResponseEntity<>(rate, HttpStatus.CREATED);
-        }
-        catch (IllegalArgumentException e)
-        {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        Rate rate = rateService.addRate(rateDTO);
+        return new ResponseEntity<>(rate, HttpStatus.CREATED);
     }
 }

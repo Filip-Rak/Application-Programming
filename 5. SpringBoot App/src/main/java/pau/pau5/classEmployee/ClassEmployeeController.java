@@ -1,5 +1,6 @@
 package pau.pau5.classEmployee;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +25,14 @@ public class ClassEmployeeController
 
     // Methods
     @GetMapping
-    public List<ClassEmployee> getGroups()
+    public ResponseEntity<?> getGroups()
     {
-        return classEmployeeService.getGroups();
+        List<ClassEmployee> list = classEmployeeService.getGroups();
+        return ResponseEntity.ok(list);
     }
 
     @PostMapping
-    public ResponseEntity<ClassEmployee> addGroup(@RequestBody ClassEmployee group)
+    public ResponseEntity<ClassEmployee> addGroup(@Valid @RequestBody ClassEmployeeDTO group)
     {
         ClassEmployee savedGroup = classEmployeeService.addGroup(group);
         return new ResponseEntity<>(savedGroup, HttpStatus.CREATED);
@@ -44,14 +46,16 @@ public class ClassEmployeeController
     }
 
     @GetMapping(path = ":{id}/employee")
-    public List<Employee> getEmployees(@PathVariable int id)
+    public ResponseEntity<?> getEmployees(@PathVariable int id)
     {
-        return classEmployeeService.getEmployees(id);
+        List<Employee> list =  classEmployeeService.getEmployees(id);
+        return ResponseEntity.ok(list);
     }
 
     @GetMapping(path = ":{id}/fill")
-    public double getUtilization(@PathVariable int id)
+    public ResponseEntity<?> getUtilization(@PathVariable int id)
     {
-        return classEmployeeService.getUtilization(id);
+        double utilization = classEmployeeService.getUtilization(id);
+        return ResponseEntity.ok(utilization); // Returns HTTP 200 with utilization as the body
     }
 }

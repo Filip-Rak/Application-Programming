@@ -23,17 +23,10 @@ public class RateService
     // Methods
     public Rate addRate(RateDTO rateDTO)
     {
-        try
-        {
-            ClassEmployee classEmployee = classEmployeeRepository.findById(rateDTO.classEmployeeId())
-                    .orElseThrow(() -> new IllegalArgumentException("Group not found"));
+        ClassEmployee classEmployee = classEmployeeRepository.findById(rateDTO.classEmployeeId())
+                .orElseThrow(() -> new IllegalArgumentException("Group not found with ID: " + rateDTO.classEmployeeId()));
 
-            Rate rate = new Rate(rateDTO.rating(), classEmployee, rateDTO.comment());
-            return rateRepository.save(rate);
-        }
-        catch (IllegalArgumentException e)
-        {
-            throw new IllegalArgumentException("Invalid rating: " + e.getMessage());
-        }
+        Rate rate = new Rate(rateDTO.rating(), classEmployee, rateDTO.comment());
+        return rateRepository.save(rate);
     }
 }

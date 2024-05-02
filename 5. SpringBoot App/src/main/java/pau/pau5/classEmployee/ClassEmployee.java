@@ -49,6 +49,15 @@ public class ClassEmployee
         ratingList = new LinkedList<>();
     }
 
+    public ClassEmployee(ClassEmployeeDTO classEmployeeDTO)
+    {
+        this.workgroup = classEmployeeDTO.workgroup();
+        this.maxEmployees = classEmployeeDTO.maxEmployees();
+
+        this.employeeList = new LinkedList<>();
+        this.ratingList = new LinkedList<>();
+    }
+
     //Methods
     public boolean addEmployee(Employee tgt)
     {
