@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 02, 2024 at 02:16 AM
+-- Generation Time: May 14, 2024 at 10:58 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -58,7 +58,7 @@ CREATE TABLE `employee` (
   `surname` varchar(255) NOT NULL,
   `employeeCondition` enum('OBECNY','DELEGACJA','CHORY','NIEOBECNY') DEFAULT NULL,
   `birthYear` int(11) DEFAULT NULL,
-  `salary` double DEFAULT NULL,
+  `salary` float DEFAULT NULL,
   `class_employee_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -74,7 +74,7 @@ INSERT INTO `employee` (`id`, `name`, `surname`, `employeeCondition`, `birthYear
 (23, 'Wojciech', 'Mozart', 'OBECNY', 1897, 30459, 32),
 (24, 'Justyna', 'Dziura', 'DELEGACJA', 2002, 2060, 33),
 (25, 'Kazimierz', 'Wielki', 'NIEOBECNY', 2004, 5060, 33),
-(26, 'Rafał', 'Zabłotni', 'DELEGACJA', 1920, 10450, 34),
+(26, 'Rafał', 'Zabłotni', 'OBECNY', 1920, 10450, 34),
 (27, 'Martyna', 'Makrela', 'DELEGACJA', 1998, 37, 37),
 (29, 'Andrzej', 'Kolano', 'NIEOBECNY', 2001, 1980, 37);
 
@@ -86,7 +86,7 @@ INSERT INTO `employee` (`id`, `name`, `surname`, `employeeCondition`, `birthYear
 
 CREATE TABLE `rate` (
   `id` int(11) NOT NULL,
-  `rating` int(11) NOT NULL,
+  `rating` int(11) DEFAULT NULL,
   `comment` varchar(255) DEFAULT NULL,
   `group_id` int(11) NOT NULL,
   `date` datetime NOT NULL
@@ -105,8 +105,7 @@ INSERT INTO `rate` (`id`, `rating`, `comment`, `group_id`, `date`) VALUES
 (7, 6, 'last review was mistake. how do I delete review???:(((', 34, '2024-04-28 23:13:13'),
 (8, 2, 'not goofy enough', 33, '2024-04-28 23:21:28'),
 (9, 0, 'stole my cat', 31, '2024-04-28 23:27:29'),
-(10, 1, 'bad neighbour', 32, '2024-04-29 10:42:55'),
-(11, 0, 'says he like black nuts', 34, '2024-05-01 19:54:50');
+(10, 1, 'bad neighbour', 32, '2024-04-29 10:42:55');
 
 --
 -- Indexes for dumped tables
@@ -140,19 +139,19 @@ ALTER TABLE `rate`
 -- AUTO_INCREMENT for table `classemployee`
 --
 ALTER TABLE `classemployee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `rate`
 --
 ALTER TABLE `rate`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
