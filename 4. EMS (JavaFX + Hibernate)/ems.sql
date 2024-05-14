@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 29, 2024 at 04:19 PM
+-- Generation Time: May 14, 2024 at 10:50 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -56,9 +56,9 @@ CREATE TABLE `employee` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `surname` varchar(255) NOT NULL,
-  `employeeCondition` varchar(255) NOT NULL,
+  `employeeCondition` enum('obecny','delegacja','chory','nieobecny') DEFAULT NULL,
   `birthYear` int(11) DEFAULT NULL,
-  `salary` decimal(10,0) DEFAULT NULL,
+  `salary` float DEFAULT NULL,
   `class_employee_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -67,16 +67,16 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`id`, `name`, `surname`, `employeeCondition`, `birthYear`, `salary`, `class_employee_id`) VALUES
-(19, 'Eliza', 'Parowiec', 'DELEGACJA', 1998, 3000, 31),
-(20, 'Magdalena', 'Bugaj', 'CHORY', 2002, 1890, 31),
-(21, 'Andrzej', 'Niemic', 'DELEGACJA', 2001, 3090, 31),
-(22, 'Antoni', 'Wilno', 'NIEOBECNY', 2019, 147, 32),
-(23, 'Wojciech', 'Mozart', 'OBECNY', 1897, 30459, 32),
-(24, 'Justyna', 'Dziura', 'DELEGACJA', 2002, 2060, 33),
-(25, 'Kazimierz', 'Wielki', 'NIEOBECNY', 2004, 5060, 33),
-(26, 'Rafał', 'Zabłotni', 'OBECNY', 1920, 10450, 34),
-(27, 'Martyna', 'Makrela', 'DELEGACJA', 1998, 37, 37),
-(29, 'Andrzej', 'Kolano', 'NIEOBECNY', 2001, 1980, 37);
+(19, 'Eliza', 'Parowiec', 'delegacja', 1998, 3000, 31),
+(20, 'Magdalena', 'Bugaj', 'chory', 2002, 1890, 31),
+(21, 'Andrzej', 'Niemic', 'delegacja', 2001, 3090, 31),
+(22, 'Antoni', 'Wilno', 'nieobecny', 2019, 147, 32),
+(23, 'Wojciech', 'Mozart', 'obecny', 1897, 30459, 32),
+(24, 'Justyna', 'Dziura', 'delegacja', 2002, 2060, 33),
+(25, 'Kazimierz', 'Wielki', 'nieobecny', 2004, 5060, 33),
+(26, 'Rafał', 'Zabłotni', 'obecny', 1920, 10450, 34),
+(27, 'Martyna', 'Makrela', 'delegacja', 1998, 37, 37),
+(29, 'Andrzej', 'Kolano', 'nieobecny', 2001, 1980, 37);
 
 -- --------------------------------------------------------
 
@@ -86,7 +86,7 @@ INSERT INTO `employee` (`id`, `name`, `surname`, `employeeCondition`, `birthYear
 
 CREATE TABLE `rate` (
   `id` int(11) NOT NULL,
-  `rating` tinyint(4) NOT NULL CHECK (`rating` between 0 and 6),
+  `rating` int(11) DEFAULT NULL,
   `comment` varchar(255) DEFAULT NULL,
   `group_id` int(11) NOT NULL,
   `date` datetime NOT NULL
