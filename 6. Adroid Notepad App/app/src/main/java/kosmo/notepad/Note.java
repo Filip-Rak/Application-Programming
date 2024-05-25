@@ -1,32 +1,32 @@
 package kosmo.notepad;
 
-public class Note {
-
+public class Note
+{
+    // Attributes
     private String title;
     private String content;
 
-    public Note() {
-        // Default constructor
-    }
+    // Constructors
+    public Note() {}
 
-    public Note(String title, String content) {
+    public Note(String title, String content)
+    {
         this.title = title;
         this.content = content;
     }
 
-    // Getters and setters
+    // Getters
     public String getTitle() {
         return title;
     }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getContent() {
         return content;
     }
 
+    // Setters
+    public void setTitle(String title) {
+        this.title = title;
+    }
     public void setContent(String content) {
         this.content = content;
     }

@@ -2,6 +2,7 @@
 <resources>
     <color name="strongYellow">#FFF200</color>
     <color name="lightYellow">#EFE4B0</color>
+    <color name="strongOrange">#FFBF00</color>
     <color name="pitchBlack">#000000</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FFBF00</color>
