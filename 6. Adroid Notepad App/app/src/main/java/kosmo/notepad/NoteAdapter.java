@@ -62,7 +62,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>
     {
         Note note = notes.get(position);
         holder.textViewTitle.setText(note.getTitle());
-        holder.textViewContent.setText(note.getContent());
+        holder.textViewContent.setText(note.getContent().split("\n")[0]);
     }
 
     // Getters
