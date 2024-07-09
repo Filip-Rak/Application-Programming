@@ -1,7 +1,9 @@
 # Overview
 This repository holds projects for the 'Application Programming' course at AGH University of Science and Technology, which I had during my fourth semester. 
+
 During the course, we developed several applications using the Java programming language. 
 Due to strict deadlines, these projects were my first experiences with the respective frameworks. 
+
 All projects with the exception of the last one were made using IntelliJ IDEA. 
 Used databases were created with phpMyAdmin tool included within XAMPP package. 
 Following directories contain seperate projects.
