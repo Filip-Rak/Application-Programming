@@ -22,7 +22,7 @@ SQL Database should also be included within the files.
 
 ![Screenshot](media/WMS.png)
 
-## Springboot App:
+## Springboot App
 A simple back-end application in Springboot framework. Setting up many endpoints and utilizing extensive exception handling.
 The database should be included within the files - depspite having the same name as in previous project, these databases are different and are not interchangeable.
 
