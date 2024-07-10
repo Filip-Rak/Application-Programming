@@ -39,4 +39,26 @@ Post and delete mapping were ommited in the list above. These are accesible thro
 ![Example Endpoint](media/springboot.png)
 
 ## Android Notepad App 
-A simple notepad application made using Android Studio.
+A simple notepad application made using Android Studio. 
+
+Application's features include:
+- Adding a note.
+- Editing a note.
+- Deleting the note.
+
+The app consists of 3 views
+- **Main activity**: Main screen is a list of exisitng notes, clicking on any note will open it's contents, with option to edit it. At the bottom there is a button to add a new note.
+- **Add note activity**: In this screen the user is asked for note's name, pressing the button will open that note's contents.
+- **View note activitty**: This activity allows user to inspect the note's contents, change these contents, change the title or delete the note.
+
+<table align="center">
+  <tr>
+    <td><img src="media/note1.png" alt="Main activity" width="200"/></td>
+    <td style="width: 20px;"></td>
+    <td><img src="media/note2.png" alt="Add note activity" width="200"/></td>
+    <td style="width: 20px;"></td>
+    <td><img src="media/note3.png" alt="View note activity" width="200"/></td>
+  </tr>
+</table>
+
+The app stores data locally on user's phone. 
