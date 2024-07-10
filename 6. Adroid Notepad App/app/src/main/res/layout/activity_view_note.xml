@@ -22,12 +22,14 @@
     <EditText
         android:id="@+id/editContent"
         android:layout_width="367dp"
-        android:layout_height="530dp"
+        android:layout_height="0dp"
         android:layout_marginTop="20dp"
-        android:hint="@string/note_content"
+        android:layout_marginBottom="60dp"
         android:contentDescription="@string/note_content"
+        android:hint="@string/note_content"
         android:textAlignment="center"
         android:textSize="28sp"
+        app:layout_constraintBottom_toTopOf="@+id/saveButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editTitle"
@@ -35,17 +37,17 @@
 
     <Button
         android:id="@+id/saveButton"
-        android:layout_width="367dp"
+        android:layout_width="0dp"
         android:layout_height="53dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="@string/save_note"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="60dp"
+        android:backgroundTint="@color/strongOrange"
         android:contentDescription="@string/save_note_button"
+        android:text="@string/save_note"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:backgroundTint="@color/strongOrange"
-        app:layout_constraintTop_toBottomOf="@id/editContent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/deleteButton"
